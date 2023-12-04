@@ -7,8 +7,8 @@ let g_displayStr = "";
 
 initListeners();
 
+// Initializes buttons
 function initListeners() {
-    // Buttons
     g_opButtons.forEach(_elem => {
         _elem.addEventListener("click", function () {
             console.log(_elem.textContent);
@@ -25,25 +25,31 @@ function initListeners() {
         updateDisplay();
     });
 }
-// while (true) {
-//     let input = parseInput("1 + 2");
-//     g_display.textContent = getDisplayStr(input);
-// }
 
+// Prints equation and result to screen.
 function updateDisplay() {
-    g_display.textContent = getDisplayStr(parseInput(g_displayStr));
-    g_history.textContent = g_displayStr;
+    let input = parseInput(g_displayStr);
+    g_history.textContent = getDisplayEq(input);
+    
+    if (input.num2 && isNum(input.num2)) {
+        g_display.textContent = 
+            operate(Number(input.num1), Number(input.num2), input.opStr);
+    } else if (isNum(input.num1)) {
+        g_display.textContent = input.num1;
+    } else {
+        g_display.textContent = "";
+    }
 }
 
-function getDisplayStr(_inputObj) {
+// Gets the display equation.
+function getDisplayEq(_inputObj) {
    let displayStr = "";
 
     if (_inputObj.num1.length) {
         displayStr += _inputObj.num1;
     }
 
-    if (_inputObj.opStr && _inputObj.opStr.length) {
-        //displayStr += `${ _inputObj.opStr }`;
+    if (_inputObj.opStr.length) {
         displayStr += " " + _inputObj.opStr + " ";
     }
 
@@ -64,7 +70,7 @@ function parseInput(_str) {
 
     for (let i = 0; i < _str.length; i++) {
         if (_str[i] == "=") {
-            if (nums.length >= 2 && opStr.length && nums[0].length && nums[1].length) {
+            if (nums.length >= 2 && opStr.length && nums[0].length && isNum(nums[1])) {
                 runOp = true;
             } else {
                 console.log("Error (equals)");
@@ -76,13 +82,11 @@ function parseInput(_str) {
             decFound = true;
         } else if (_str[i] == " " || _str[i] == String.fromCharCode(9)) {
             decFound = false;
-            //if (nums.length >= 2 && nums[1].length) runOp = true;
         } else if (_str[i] == "+" || _str[i] == "-" || _str[i] == "*" 
                 || _str[i] == "\/") {
             if (nums.length >= 2 && nums[1].length) {
                 runOp = true;
                 i--;
-                //break;
             } else if (opStr == "" && nums[0].length) {
                 opStr = _str[i];
                 nums.push("");
@@ -103,22 +107,24 @@ function parseInput(_str) {
             break;
         }
 
-        if (nums.length >= 2 && opStr.length && nums[0].length && nums[1].length 
-                && (i >= _str.length - 1 || runOp)) {
-            //console.log(nums[0] + " " + nums[1] + " " + opStr);
-            //let result = operate(Number(nums[0]), Number(nums[1]), opStr);
-            //console.log(result);
+        if (nums.length >= 2 && opStr.length && nums[0].length && isNum(nums[1])
+                && runOp) {
             nums[0] = operate(Number(nums[0]), Number(nums[1]), opStr);
             nums.pop();
             opStr = "";
             runOp = false;
-            //break;
         }
     }
 
     return { num1: nums[0], num2: nums[1] || null, opStr };
 }
 
+// Checks if a number string has numbers or just a negative symbol.
+function isNum(_str) {
+    return _str.length > 1 || (_str.length && _str[0] != "-")
+}
+
+// Does the math.
 function operate(_num1, _num2, _opStr) {
     let result = "Error (operate)";
     
@@ -136,5 +142,21 @@ function operate(_num1, _num2, _opStr) {
         }
     }
 
-    return String(result);
+    return trimZeroes(String(result.toFixed(6)));
+}
+
+// Formats a float by truncating trailing zeroes and (if needed) decimal points.
+function trimZeroes(_str) {
+    if (_str.search(".") >= 0) {
+        let char = _str[_str.length - 1];
+        
+        while (char == "0" || char == ".") {
+            _str = _str.slice(0, _str.length - 1);
+
+            if (char == ".") break;
+            char = _str[_str.length - 1];
+        }
+    }
+
+    return _str;
 }
