@@ -1,0 +1,71 @@
+.calc-frame {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    justify-items: center;
+}
+
+.output {
+    text-align: center;
+    font-size: 16px;
+    font-family: 'Courier New', Courier, monospace;
+    height: 48px;
+    margin: 0px;
+}
+
+.display {
+    font-size: 32px;
+}
+
+.buttons {
+    display: flex;
+    flex-direction: row;
+    align-content: center;
+    justify-content: center;
+}
+
+.right {
+    display: flex;
+    flex-direction: column;
+}
+
+.left {
+    display: flex;
+    width: 96px;
+    flex-direction: column;
+}
+
+.top, .bottom {
+    display: flex;
+    flex-direction: row;
+}
+
+.middle {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+button {
+    width: 32px;
+    height: 32px;
+    margin: 0px;
+    padding: 0px;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+.tall {
+    height: 64px;
+}
+
+.wide {
+    width: 64px;
+}
+
+.word {
+    font-size: 9px;
+}
+
+.op {
+    font-size: 24px;
+}
