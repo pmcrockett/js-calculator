@@ -1,3 +1,12 @@
+body {
+    background-color: #d1c4f0;
+    color: #200525;
+}
+
+.disable {
+    color: #b195c2;
+}
+
 .calc-frame {
     display: flex;
     flex-direction: column;
@@ -52,6 +61,10 @@ button {
     margin: 0px;
     padding: 0px;
     font-family: 'Courier New', Courier, monospace;
+    color: #a690db;
+    background-color: #530e63;
+    border-radius: 10px;
+    border-color: #a690db;
 }
 
 .tall {
@@ -68,4 +81,10 @@ button {
 
 .op {
     font-size: 24px;
+}
+
+.num {
+    background-color: #a690db;
+    color: #530e63;
+    border-color: #530e63;
 }

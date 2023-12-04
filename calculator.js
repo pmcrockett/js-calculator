@@ -34,8 +34,10 @@ function updateDisplay() {
     if (input.num2 && isNum(input.num2)) {
         g_display.textContent = 
             operate(Number(input.num1), Number(input.num2), input.opStr);
+        g_display.classList.add("disable");
     } else if (isNum(input.num1)) {
         g_display.textContent = input.num1;
+        g_display.classList.remove("disable");
     } else {
         g_display.textContent = "";
     }
