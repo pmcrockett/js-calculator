@@ -50,7 +50,8 @@ function initListeners() {
             selector = "enter";
         } else if (_e.key == "Escape") {
             selector = "clear";
-        } else if (_e.key == "Backspace") {
+        } else if (_e.key == "Backspace" 
+                || (_e.key.toLowerCase() == "z" && _e.ctrlKey)) {
             selector = "undo";
         }
 
